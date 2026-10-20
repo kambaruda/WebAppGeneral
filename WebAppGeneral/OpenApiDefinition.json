@@ -1,0 +1,254 @@
+{
+    "openapi": "3.1.1",
+    "info": {
+        "title": "WebAppGeneral | v1",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "https://localhost:6001/"
+        }
+    ],
+    "paths": {
+        "/Entity/PostHelloWorld": {
+            "post": {
+                "tags": [
+                    "Entity"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Request"
+                            }
+                        },
+                        "text/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Request"
+                            }
+                        },
+                        "application/*+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Request"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Response"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Response"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Response"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/Entity/GetEntity": {
+            "get": {
+                "tags": [
+                    "Entity"
+                ],
+                "parameters": [
+                    {
+                        "name": "entityId",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/Entity/GetEntities": {
+            "get": {
+                "tags": [
+                    "Entity"
+                ],
+                "parameters": [
+                    {
+                        "name": "entityCriteria",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "text/plain": {
+                                "schema": {
+                                    "type": "array"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "type": "array"
+                                }
+                            },
+                            "text/json": {
+                                "schema": {
+                                    "type": "array"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/Entity/CreateEntity": {
+            "post": {
+                "tags": [
+                    "Entity"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {}
+                        },
+                        "text/json": {
+                            "schema": {}
+                        },
+                        "application/*+json": {
+                            "schema": {}
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/Entity/UpdateEntity": {
+            "patch": {
+                "tags": [
+                    "Entity"
+                ],
+                "parameters": [
+                    {
+                        "name": "entityId",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {}
+                        },
+                        "text/json": {
+                            "schema": {}
+                        },
+                        "application/*+json": {
+                            "schema": {}
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/Entity/UpsertEntity": {
+            "put": {
+                "tags": [
+                    "Entity"
+                ],
+                "parameters": [
+                    {
+                        "name": "entityId",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {}
+                        },
+                        "text/json": {
+                            "schema": {}
+                        },
+                        "application/*+json": {
+                            "schema": {}
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Request": {
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "type": "string"
+                    }
+                }
+            },
+            "Response": {
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "type": "string"
+                    },
+                    "count": {
+                        "pattern": "^-?(?:0|[1-9]\\d*)$",
+                        "type": [
+                            "integer",
+                            "string"
+                        ],
+                        "format": "int32"
+                    },
+                    "allowed": {
+                        "type": "boolean"
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Entity"
+        }
+    ]
+}

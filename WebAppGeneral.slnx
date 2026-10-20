@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="Core/Core.csproj" />
+  <Project Path="WebAppGeneral.AppHost/WebAppGeneral.AppHost.csproj" />
+  <Project Path="WebAppGeneral.ServiceDefaults/WebAppGeneral.ServiceDefaults.csproj" />
+  <Project Path="WebAppGeneral/WebAppGeneral.csproj" />
+</Solution>

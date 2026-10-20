@@ -1,0 +1,11 @@
+@WebAppGeneral_HostAddress = http://localhost:5003
+
+GET {{WebAppGeneral_HostAddress}}/openapi/v1.json
+Accept: application/json
+
+###
+
+GET {{WebAppGeneral_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
