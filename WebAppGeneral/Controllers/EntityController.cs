@@ -22,27 +22,29 @@ public class EntityController(ILogger<EntityController> logger, IServiceReposito
         return response;
     }
     [HttpGet("GetEntity")]
-    public async Task<string> GetEntity([FromQuery] string entityId)
+    public async Task<Response> GetEntity([FromQuery] string entityId, CancellationToken cancellationToken)
     {
         _logger.LogInformation("GetEntity called with entityId: {entityId}", entityId);
-        var entity = await _serviceRepository.GetEntityAsync(entityId, default);
+        var entity = await _serviceRepository.GetEntityAsync(entityId, cancellationToken);
         return new Response()
         {
             Allowed = true,
-            Message = $"Entity found: {entity.Name}",
+            Message = $"Entity found: {entity?.Name ?? "Not found"}",
+            Data = [entity],
             Count = entity != null ? 1 : 0
-        }.ToJstring();
+        };
     }
     [HttpGet("GetAllEntities")]
-    public async Task<string> GetAllEntities()
+    public async Task<Response> GetAllEntities(CancellationToken cancellationToken)
     {
         _logger.LogInformation("GetAllEntities called");
-        var entities = await _serviceRepository.GetAllEntitiesAsync(default);
+        var entities = await _serviceRepository.GetAllEntitiesAsync(cancellationToken);
         return new Response()
         {
             Allowed = true,
             Message = $"Entities found: {entities.Count()}",
+            Data = entities,
             Count = entities.Count()
-        }.ToJstring();
+        };
     }
 }
