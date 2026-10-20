@@ -1,3 +1,4 @@
+using Core.Extensions;
 using Core.Services.Service.Dtos.Requests;
 using Core.Services.Service.Dtos.Responses;
 using Core.Services.Service.Interfaces;
@@ -21,47 +22,27 @@ public class EntityController(ILogger<EntityController> logger, IServiceReposito
         return response;
     }
     [HttpGet("GetEntity")]
-    public async Task<object> GetEntity([FromQuery] string entityId)
+    public async Task<string> GetEntity([FromQuery] string entityId)
     {
         _logger.LogInformation("GetEntity called with entityId: {entityId}", entityId);
         var entity = await _serviceRepository.GetEntityAsync(entityId, default);
-        return entity;
-    }
-    [HttpGet("GetEntities")]
-    public async Task<IEnumerable<object>> GetEntities([FromQuery] string entityCriteria)
-    {
-        _logger.LogInformation("GetEntities called with entityCriteria: {entityCriteria}", entityCriteria);
-        var entities = await _serviceRepository.GetEntitiesAsync(entityCriteria, default);
-        return entities;
-    }
-    [HttpPost("CreateEntity")]
-    public async Task<object> CreateEntity([FromBody] object entity)
-    {
-        _logger.LogInformation("CreateEntity called with entity: {entity}", entity);
-        var createdEntity = await _serviceRepository.CreateEntityAsync(entity, default);
-        return createdEntity;
-    }
-    [HttpPatch("UpdateEntity")]
-    public async Task<object> UpdateEntity([FromQuery] string entityId, [FromBody] object entity)
-    {
-        _logger.LogInformation("UpdateEntity called with entityId: {entityId} and entity: {entity}", entityId, entity);
-        var updatedEntity = await _serviceRepository.UpdateEntityAsync(entityId, entity, default);
-        return updatedEntity;
-    }
-    [HttpPut("UpsertEntity")]
-    public async Task<object> UpsertEntity([FromQuery] string entityId, [FromBody] object entity)
-    {
-        _logger.LogInformation("UpsertEntity called with entityId: {entityId} and entity: {entity}", entityId, entity);
-        var existingEntity = await _serviceRepository.GetEntityAsync(entityId, default);
-        if (existingEntity != null)
+        return new Response()
         {
-            var updatedEntity = await _serviceRepository.UpdateEntityAsync(entityId, entity, default);
-            return updatedEntity;
-        }
-        else
+            Allowed = true,
+            Message = $"Entity found: {entity.Name}",
+            Count = entity != null ? 1 : 0
+        }.ToJstring();
+    }
+    [HttpGet("GetAllEntities")]
+    public async Task<string> GetAllEntities()
+    {
+        _logger.LogInformation("GetAllEntities called");
+        var entities = await _serviceRepository.GetAllEntitiesAsync(default);
+        return new Response()
         {
-            var createdEntity = await _serviceRepository.CreateEntityAsync(entity, default);
-            return createdEntity;
-        }
+            Allowed = true,
+            Message = $"Entities found: {entities.Count()}",
+            Count = entities.Count()
+        }.ToJstring();
     }
 }

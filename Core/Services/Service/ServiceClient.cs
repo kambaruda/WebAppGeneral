@@ -1,4 +1,5 @@
 ﻿using Core.Services.Service.Interfaces;
+using Core.Services.Service.Types;
 using Microsoft.Extensions.Logging;
 
 namespace Core.Services.Service
@@ -8,74 +9,25 @@ namespace Core.Services.Service
         private readonly ServiceOptions _options = options;
         private ILogger<IServiceRepository> _logger = logger;
 
-        public IEnumerable<object> CreateEntities(IEnumerable<object> entities)
+        public Task<IEnumerable<EntityType>> GetAllEntitiesAsync(CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var entities = new List<EntityType>
+            {
+                new() { Id = "1", Name = "Entity 1", Description = "Description for entity 1" },
+                new() { Id = "2", Name = "Entity 2", Description = "Description for entity 2" },
+                new() { Id = "3", Name = "Entity 3", Description = "Description for entity 3" }
+            };
+            return Task.FromResult<IEnumerable<EntityType>>(entities);
         }
 
-        public Task<object> CreateEntitiesAsync(IEnumerable<object> entities, CancellationToken cancellationToken)
+        public Task<EntityType> GetEntityAsync(string entityId, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
-        }
-
-        public object CreateEntity(object entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<object> CreateEntityAsync(object entity, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<object> GetEntities(string entityCriteria)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<IEnumerable<object>> GetEntitiesAsync(string entityCriteria, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
-        public object GetEntity(string entityName, string entityId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public object GetEntity(string entityId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<object> GetEntityAsync(string entityName, string entityId, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<object> GetEntityAsync(string entityId, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
-        public object UpdateEntities(string entityCriteria, IEnumerable<object> entities)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<object> UpdateEntitiesAsync(string entityCriteria, IEnumerable<object> entities, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
-        public object UpdateEntity(string entityId, object entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<object> UpdateEntityAsync(string entityId, object entity, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
+            return Task.FromResult(new EntityType
+            {
+                Id = entityId,
+                Name = $"Entity {entityId}",
+                Description = $"Description for entity {entityId}"
+            });
         }
     }
 }
