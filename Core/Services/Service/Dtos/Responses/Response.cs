@@ -6,7 +6,7 @@ namespace Core.Services.Service.Dtos.Responses
     public class Response : IResponse, IJsonable
     {
         public string Message { get; set; } = string.Empty;
-        public IEnumerable<EntityType?> Data { get; set; } = null;
+        public IReadOnlyList<EntityType?> Data { get; set; } = [];
         public int Count { get; set; } = 0;
         public bool Allowed { get; set; } = true;
     }
